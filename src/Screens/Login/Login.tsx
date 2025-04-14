@@ -31,7 +31,7 @@ const Login = () => {
         let response = await login(data)
         if (response?.id) {
             dispatch(setUser(response ))
-            navigate('Home')
+            navigate('home')
         } else { setLoginError(true) }
 
     };

@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material"
+import { useTheme } from "@mui/material"
 import logoIcon from '../../assets/logoIcon.png'
 
 const NavBar = () => {

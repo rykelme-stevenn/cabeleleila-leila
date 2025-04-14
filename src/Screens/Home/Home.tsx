@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import { getServices } from "../../service/operational";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,10 +7,13 @@ import { RootState } from "../../store";
 import Divider from "@mui/material/Divider";
 import { formatarMoedaReal } from "../../utils/functions";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { SecondaryButton } from "../../Components/Buttons/Buttons";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const services = useSelector((state: RootState) => state.services.services);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getStoreServices();
@@ -34,14 +37,19 @@ const Home = () => {
                     <div className="mt-5 col-span-4">
                         {services && services.map((item, index) => (
                             <>
-                                <div className="py-6 px-2 w-1/4">
-                                    <p className="font-semibold">{item.name}</p>
-                                    <div className="flex justify-between">
-                                        <p className="text-[#159343]">{formatarMoedaReal(item?.value)}</p>
-                                        <div className="flex items-center">
-                                            <AccessTimeIcon style={{width: 14}}/>
+                                <div className="flex justify-between items-center py-6 px-2">
+                                    <div className="">
+                                        <p className="font-semibold">{item.name}</p>
+                                        <div className="flex items-center ">
+                                            <p className="text-[#159343] mr-6">{formatarMoedaReal(item?.value)}</p>
+                                            <AccessTimeIcon style={{ width: 14 }} />
                                             <p className="ml-1">{item?.estimated_time} min</p>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <SecondaryButton type="button" label="Agendar" onPress={() => navigate('/agendamento', {
+                                            state: { service: item }
+                                        })}/>
                                     </div>
                                 </div>
                                 {!((services?.length - 1) === index) && <Divider />}

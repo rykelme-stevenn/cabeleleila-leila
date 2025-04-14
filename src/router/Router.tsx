@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthRoute from './AuthRouter';
 import Login from '../Screens/Login/Login';
 import Home from '../Screens/Home/Home';
+import Scheduling from '../Screens/Scheduling/Scheduling';
 
 function AppRouter() {
 
@@ -16,6 +17,7 @@ function AppRouter() {
 
                 <Route element={<AuthRoute requireAuth={true} />}>
                     <Route path="/home" element={<Home />} />
+                    <Route path="/agendamento" element={<Scheduling/>}/>
                 </Route>
             </Routes>
         </Router>
