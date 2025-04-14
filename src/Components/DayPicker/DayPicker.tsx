@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTheme } from "@mui/material";
-import { CompleteDate } from "../../utils/types/types";
+import { CompleteDateType } from "../../utils/types/types";
 
 
 type DayPickerProps = {
-    selectedDay: CompleteDate;
-    selectDay: (day: CompleteDate) => void;
+    selectedDay: CompleteDateType;
+    selectDay: (day: CompleteDateType) => void;
 }
 
 export const DayPicker = ({ selectDay, selectedDay }: DayPickerProps) => {
@@ -47,7 +47,7 @@ export const DayPicker = ({ selectDay, selectedDay }: DayPickerProps) => {
         year: "numeric",
     });
 
-    function compareDates(date: CompleteDate) {
+    function compareDates(date: CompleteDateType) {
         return (date.day === selectedDay.day &&
             date.month === selectedDay.month &&
             date.year === selectedDay.year

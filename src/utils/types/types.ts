@@ -1,30 +1,30 @@
-export type User = {
+export type UserType = {
     id: number
     email: string,
     name: string
 }
 
-export type Service = {
+export type ServiceType = {
     id: number,
     name: string,
     value: number,
     estimated_time: number
 }
 
-export type CompleteDate = {
+export type CompleteDateType = {
     day: number;
     month: number;
     year: number;
     weekday: string;
 }
 
-export type CompleteHour = {
+export type CompleteHourType = {
     hour: number;
     minute: number;
 }
 
-export type Scheduling = {
-    id: number;
+export type SchedulingType = {
+    id?: string;
     user_id: number;
     day: number;
     month: number;
@@ -32,4 +32,5 @@ export type Scheduling = {
     year: number;
     hour: number;
     minute: number;
+    service_id: number;
   };

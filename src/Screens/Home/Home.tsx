@@ -41,7 +41,7 @@ const Home = () => {
                                     <div className="">
                                         <p className="font-semibold">{item.name}</p>
                                         <div className="flex items-center ">
-                                            <p className="text-[#159343] mr-6">{formatarMoedaReal(item?.value)}</p>
+                                            <p className="text-base font-medium text-[#159343] mr-6">{formatarMoedaReal(item?.value)}</p>
                                             <AccessTimeIcon style={{ width: 14 }} />
                                             <p className="ml-1">{item?.estimated_time} min</p>
                                         </div>

@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { User } from '../utils/types/types';
+import { UserType } from '../utils/types/types';
 type LoginData = {
     email: string;
     password: string;
   };
 
-export async function login(loginData: LoginData): Promise<User> {
+export async function login(loginData: LoginData): Promise<UserType> {
     return await axios.get(`http://localhost:3000/users`, {
         params: {
             email: loginData.email

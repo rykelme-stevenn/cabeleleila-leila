@@ -2,28 +2,37 @@ import { useEffect, useState } from 'react';
 import NavBar from '../../Components/NavBar/NavBar';
 import { DayPicker } from '../../Components/DayPicker/DayPicker';
 import HourPicker from '../../Components/HourPicker/HourPicker';
-import { CompleteDate, CompleteHour } from '../../utils/types/types';
+import { CompleteDateType, CompleteHourType, SchedulingType, ServiceType } from '../../utils/types/types';
 import ModalConfirmScheduling from '../../Components/Modals/ModalConfirmScheduling/ModalConfirmScheduling';
 import { useLocation } from 'react-router-dom';
+import { getSchedulings } from '../../service/operational';
 
 
 const Scheduling = () => {
-    const [selectedDay, setSelectedDay] = useState<CompleteDate>({
+    const [selectedDay, setSelectedDay] = useState<CompleteDateType>({
         day: 0,
         month: 0,
         year: 0,
         weekday: ''
     })
-    const [selectedHour, setSelectedHour] = useState<CompleteHour>({
+    const [selectedHour, setSelectedHour] = useState<CompleteHourType>({
         hour: 0,
         minute: 0
     })
     const [openedConfirmScheduling, setOpenedConfirmScheduling] = useState(false)
-    const serviceSelected = useLocation().state?.service; 
+    const serviceSelected: ServiceType = useLocation().state?.service;
+    const [schedulingsMade, setSchedulingsMade] = useState<Array<SchedulingType>>([])
 
-    // useEffect(() => {
-    //     console.log(location.state?.service)
-    // }, [])
+    useEffect(() => {
+        getStoreSchedulings()
+    }, [])
+
+    async function getStoreSchedulings() {
+        let response = await getSchedulings();
+        if (response) {
+            setSchedulingsMade(response)
+        }
+    }
 
     return (
         <>
@@ -38,9 +47,9 @@ const Scheduling = () => {
                                 <HourPicker selectedDate={selectedDay} selectHour={(value) => {
                                     setSelectedHour(value)
                                     setOpenedConfirmScheduling(true)
-                                }}/>
-                                <ModalConfirmScheduling 
-                                    opened={openedConfirmScheduling} 
+                                }} schedulingsMade={schedulingsMade} service={serviceSelected}/>
+                                <ModalConfirmScheduling
+                                    opened={openedConfirmScheduling}
                                     handleClose={() => setOpenedConfirmScheduling(false)}
                                     selectedDay={selectedDay}
                                     selectedHour={selectedHour}

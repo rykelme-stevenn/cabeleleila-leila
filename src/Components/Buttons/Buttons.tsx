@@ -6,9 +6,9 @@ interface IButton {
     onPress?: () => void;
 }
 
-export const PrimaryButton = ({label, type} : IButton) => {
+export const PrimaryButton = ({label, type, onPress} : IButton) => {
     return (
-        <Button id='primaryButton' className='w-full' type={type} variant="contained">{label}</Button>
+        <Button id='primaryButton' className='w-full' type={type} variant="contained" onClick={() => onPress && onPress()}>{label}</Button>
     )
 }
 
