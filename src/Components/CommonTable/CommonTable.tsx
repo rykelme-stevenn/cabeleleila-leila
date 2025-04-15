@@ -75,7 +75,7 @@ const CommonTable = ({ headers, rows, actions, handleEdit, handleView, handleCha
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{maxHeight: 400}} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
