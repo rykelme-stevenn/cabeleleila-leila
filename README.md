@@ -1,46 +1,76 @@
-# Getting Started with Create React App
+# Cabeleleila System - Sistema de Agendamento de Serviços de Cabeleireiro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Cabeleleila System** é um sistema de agendamento de serviços para o **Cabeleleila Leila**, uma empresa de cabeleireiro da cabeleleila leila. O sistema permite que os clientes agendem serviços de forma prática e eficiente, e que a leila gerencie esses agendamentos.
 
-## Available Scripts
+## Tecnologias Utilizadas
 
-In the project directory, you can run:
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **Tailwind CSS**: Framework CSS para criar interfaces modernas e responsivas.
+- **Material UI**: Conjunto de componentes React para interfaces de usuário estilizadas.
+- **Redux**: Biblioteca para gerenciamento de estado global da aplicação.
+- **JSON Server**: Servidor REST falso para simulação de API.
 
-### `npm start`
+## Requisitos para Rodar o Projeto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Node.js 18 ou superior** (recomendado: Node.js 20+)
+- **npm**: Gerenciador de pacotes para JavaScript
+- **Git** (opcional, mas recomendado para clonar o repositório)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## Passo a Passo para Rodar o JSON Server (Simulação de API)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Clone o repositório da API:
 
-### `npm run build`
+Primeiro, clone o repositório da API que simula o banco de dados (JSON Server).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/rykelme-stevenn/cabeleleila-leila-api.git
+```
+### 2. Instale o JSON Server globalmente:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install -g json-server
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 3. Inicie o JSON Server para simular uma API:
 
-### `npm run eject`
+```bash
+json-server --watch db.json --port 3000
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Passo a Passo para Rodar o Projeto
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. Clone o repositório do projeto principal:
+```bash
+git clone https://github.com/rykelme-stevenn/cabeleleila-leila.git
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 2. Navegue até a pasta do projeto:
+```bash
+cd cabeleleila-leila
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 3. Instale as dependências do projeto:
+```bash
+npm install
+```
 
-## Learn More
+### 4. Inicie o servidor de desenvolvimento:
+```bash
+npm start
+# O aplicativo estará acessível em http://localhost:3001 (ou na porta configurada).
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Obs: Durante a execução, se o terminal pedir para rodar na porta 3001 (ou em outra), tecle yes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Utilizando o sistema
+#### Usuário comum
+Para logar-se utilize algum desses dois usuários:
+
+- Usuário: teste@outlook.com 
+- Senha: teste123
+
+#### Usuário leila(adm)
+- Usuário: leilacabeleleila@outlook.com
+- Senha: Corte123
