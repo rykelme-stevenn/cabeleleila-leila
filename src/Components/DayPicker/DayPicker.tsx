@@ -54,15 +54,26 @@ export const DayPicker = ({ selectDay, selectedDay }: DayPickerProps) => {
         )
     }
 
+    function invalidCurrentDate() {
+        console.log(currentDate)
+        let today = new Date()
+        return (
+            today.getFullYear() === currentDate.getFullYear() &&
+            today.getMonth() === currentDate.getMonth() &&
+            today.getDate() === currentDate.getDate()
+        )
+    }
+
     return (
         <div className="bg-white rounded-lg border border-gray-200 p-4">
 
             <div className="flex justify-between items-center mb-4">
                 <button
                     onClick={() => navigateDays("prev")}
+                    disabled={invalidCurrentDate()}
                     className="p-2 rounded-full hover:bg-gray-100"
                 >
-                    <ArrowBackIcon className="w-5 h-5" />
+                    <ArrowBackIcon className="w-5 h-5" color={invalidCurrentDate() ? "disabled" : 'inherit'}/>
                 </button>
 
                 <h2 className="text-lg font-semibold capitalize">
@@ -92,7 +103,7 @@ export const DayPicker = ({ selectDay, selectedDay }: DayPickerProps) => {
                         className={`h-12 flex items-center justify-center rounded-full border cursor-pointer
                         ${day.month !== currentMonth ? "text-gray-400" : "hover:bg-blue-50"}`}
                         onClick={() => selectDay(day)}
-                        style={compareDates(day) ? {backgroundColor: theme.palette.primary.main, color: 'white'} : {backgroundColor: 'white'}}
+                        style={compareDates(day) ? { backgroundColor: theme.palette.primary.main, color: 'white' } : { backgroundColor: 'white' }}
                     >
                         {day.day}
                     </div>

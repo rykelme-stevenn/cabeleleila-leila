@@ -1,7 +1,8 @@
 export type UserType = {
     id: number
     email: string,
-    name: string
+    name: string,
+    owner: string
 }
 
 export type ServiceType = {
@@ -32,5 +33,8 @@ export type SchedulingType = {
     year: number;
     hour: number;
     minute: number;
-    service_id: number;
+    service: ServiceType;
+    status: number;
+    created_at?: Date;
+    updated_at?: Date;
   };

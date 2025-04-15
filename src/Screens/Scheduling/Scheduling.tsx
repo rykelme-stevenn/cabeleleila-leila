@@ -4,9 +4,11 @@ import { DayPicker } from '../../Components/DayPicker/DayPicker';
 import HourPicker from '../../Components/HourPicker/HourPicker';
 import { CompleteDateType, CompleteHourType, SchedulingType, ServiceType } from '../../utils/types/types';
 import ModalConfirmScheduling from '../../Components/Modals/ModalConfirmScheduling/ModalConfirmScheduling';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getSchedulings } from '../../service/operational';
-
+import { useDispatch } from 'react-redux';
+import { setScheduling } from '../../store/reducers/scheduling/scheduling';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const Scheduling = () => {
     const [selectedDay, setSelectedDay] = useState<CompleteDateType>({
@@ -14,31 +16,23 @@ const Scheduling = () => {
         month: 0,
         year: 0,
         weekday: ''
-    })
+    });
     const [selectedHour, setSelectedHour] = useState<CompleteHourType>({
         hour: 0,
         minute: 0
-    })
-    const [openedConfirmScheduling, setOpenedConfirmScheduling] = useState(false)
+    });
+    const [openedConfirmScheduling, setOpenedConfirmScheduling] = useState(false);
     const serviceSelected: ServiceType = useLocation().state?.service;
-    const [schedulingsMade, setSchedulingsMade] = useState<Array<SchedulingType>>([])
+    const navigate = useNavigate()
+    // const [schedulingsMade, setSchedulingsMade] = useState<Array<SchedulingType>>([])
 
-    useEffect(() => {
-        getStoreSchedulings()
-    }, [])
-
-    async function getStoreSchedulings() {
-        let response = await getSchedulings();
-        if (response) {
-            setSchedulingsMade(response)
-        }
-    }
 
     return (
         <>
             <div>
                 <NavBar />
-                <div className="px-16 py-12 w-4/6 mx-auto ">
+                <div className="lg:px-16 px-4 lg:py-12 py-4 lg:w-4/6 w-6/6 mx-auto ">
+                    <ArrowBackIosIcon className='mb-4' onClick={() => navigate('/home')}/>
                     <DayPicker selectedDay={selectedDay} selectDay={(value) => setSelectedDay(value)} />
                     {
                         selectedDay?.day !== 0 && (
@@ -47,13 +41,17 @@ const Scheduling = () => {
                                 <HourPicker selectedDate={selectedDay} selectHour={(value) => {
                                     setSelectedHour(value)
                                     setOpenedConfirmScheduling(true)
-                                }} schedulingsMade={schedulingsMade} service={serviceSelected}/>
+                                }}  service={serviceSelected}/>
                                 <ModalConfirmScheduling
                                     opened={openedConfirmScheduling}
                                     handleClose={() => setOpenedConfirmScheduling(false)}
                                     selectedDay={selectedDay}
                                     selectedHour={selectedHour}
                                     selectedService={serviceSelected}
+                                    handleExit={() => {
+                                        setOpenedConfirmScheduling(false)
+                                        navigate('/home')
+                                    }}
                                 />
                             </>
                         )

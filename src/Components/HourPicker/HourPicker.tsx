@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { CompleteDateType, CompleteHourType, SchedulingType, ServiceType } from "../../utils/types/types";
 import { useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 type HourPicker = {
     selectedDate: CompleteDateType,
-    schedulingsMade: Array<SchedulingType>,
     service: ServiceType,
-    selectHour: (value: CompleteHourType) => void;
+    schedulingToEdit?: SchedulingType,
+    selectHour: (value: CompleteHourType) => void
 }
 
-const HourPicker = ({ selectedDate, selectHour, schedulingsMade, service }: HourPicker) => {
+const HourPicker = ({ selectedDate, selectHour, service, schedulingToEdit }: HourPicker) => {
     const openHour = 9;
     const closeHour = 18;
     const [hoursVisible, setHoursVisible] = useState<Array<CompleteHourType>>([])
     const theme = useTheme()
+    const schedulingsMade = useSelector((state: RootState ) => state.scheduling.schedulings)
 
     useEffect(() => {
         visibleHours()
@@ -46,12 +49,11 @@ const HourPicker = ({ selectedDate, selectHour, schedulingsMade, service }: Hour
             index += 1
 
         }
-        console.log(hoursX)
         setHoursVisible(hoursX)
     }
 
     function isHourlyUsed(hoursToAdd: number, minutesToAdd: number) {
-        const isUsed = schedulingsMade.some(s => s.service_id === service.id && s.day === selectedDate.day && s.hour === hoursToAdd && s.minute === minutesToAdd);
+        const isUsed = schedulingToEdit ?schedulingsMade.some(s => s.service.id === service.id && s.day === selectedDate.day && s.hour === hoursToAdd && s.minute === minutesToAdd && s.id !== schedulingToEdit.id) : schedulingsMade.some(s => s.service.id === service.id && s.day === selectedDate.day && s.hour === hoursToAdd && s.minute === minutesToAdd);
         return (isUsed)
     }
 

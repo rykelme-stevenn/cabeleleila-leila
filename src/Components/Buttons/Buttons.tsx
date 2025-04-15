@@ -4,11 +4,12 @@ interface IButton {
     label: string;
     type: "button" | "submit" | "reset" | undefined;
     onPress?: () => void;
+    color?: string;
 }
 
-export const PrimaryButton = ({label, type, onPress} : IButton) => {
+export const PrimaryButton = ({label, type, onPress, color} : IButton) => {
     return (
-        <Button id='primaryButton' className='w-full' type={type} variant="contained" onClick={() => onPress && onPress()}>{label}</Button>
+        <Button id='primaryButton' className='w-full' type={type} variant="contained" onClick={() => onPress && onPress()} style={{backgroundColor: color}}>{label}</Button>
     )
 }
 

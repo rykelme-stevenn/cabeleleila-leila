@@ -1,26 +1,27 @@
-import { CompleteHourType } from "./types/types";
+import { useTheme } from "@mui/material";
+import { CompleteHourType, SchedulingType } from "./types/types";
 
 export function formatarMoedaReal(value: number, decimals: number = 2): string {
-    if (isNaN(value)) {
-      return 'R$ 0,00';
-    }
-  
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals
-    }).format(value);
+  if (isNaN(value)) {
+    return 'R$ 0,00';
   }
+
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals
+  }).format(value);
+}
 
 export function estimateHour(selectedHour: CompleteHourType, serviceHour: number) {
   let totalMinutes = (selectedHour.hour * 60) + (selectedHour.minute + serviceHour)
   let hours = Math.floor(totalMinutes / 60)
   let minutes = totalMinutes - (hours * 60)
-  return `${hours}:${minutes}`
+  return formatDate(hours, minutes, ':')
 }
 
-export function monthByNumber(month: number){
+export function monthByNumber(month: number) {
   const months = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril',
     'Maio', 'Junho', 'Julho', 'Agosto',
@@ -28,4 +29,61 @@ export function monthByNumber(month: number){
   ];
 
   return months[month]
+}
+
+export function formatDate(item1: number, item2: number, separator: string) {
+  return (`${item1 < 10 ? '0' : ''}${item1}${separator}${item2 < 10 ? '0' : ''}${item2}`)
+}
+
+export function statusValue(status: number) {
+  switch (status) {
+    case 1:
+      return 'Solicitado'
+    case 2:
+      return 'Confirmado'
+    case 3:
+      return 'Finalizado'
+    case 4:
+      return 'Cancelado'
+    default:
+      break;
+  }
+}
+
+
+export function validEditingPossible(schedulingMade: SchedulingType | undefined): boolean {
+  if (!schedulingMade) return false
+  let today = new Date();
+  today.setDate(today.getDate() + 2);
+  let scheduledDate = new Date(schedulingMade.year, schedulingMade.month, schedulingMade.day);
+
+  return today <= scheduledDate;
+}
+
+export function weekdayToNumber(weekday: string) {
+  let weekdayNumber = 0
+  switch (weekday.toLowerCase()) {
+    case 'seg':
+      weekdayNumber = 1
+      break;
+    case 'ter':
+      weekdayNumber = 2
+      break;
+    case 'qua':
+      weekdayNumber = 3
+      break;
+    case 'qui':
+      weekdayNumber = 4
+      break;
+    case 'sex':
+      weekdayNumber = 5
+      break;
+    case 'sab':
+      weekdayNumber = 6
+      break;
+    case 'dom':
+      weekdayNumber = 7
+      break;
+  }
+  return weekdayNumber
 }
