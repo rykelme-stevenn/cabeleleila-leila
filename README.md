@@ -63,3 +63,12 @@ npm start
 ```
 
 Obs: Durante a execução, se o terminal pedir para rodar na porta 3001 (ou em outra), tecle yes
+
+## Utilizando o sistema
+#### Usuário comum
+- Usuário: teste@outlook.com 
+- Senha: teste123
+
+#### Usuário leila
+- Usuário: leilacabeleleila@outlook.com
+- Senha: Corte123
