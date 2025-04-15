@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { SchedulingType } from '../../../utils/types/types';
-import { weekdayToNumber } from '../../../utils/functions';
+import { numberToWeekday, weekdayToNumber } from '../../../utils/functions';
 
 const Dashboard = () => {
     const theme = useTheme();
@@ -54,7 +54,9 @@ const Dashboard = () => {
             <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-8">
                 <div className="w-full lg:w-1/2">
                     <LineChart
-                        xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7] }]}
+                        xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7], valueFormatter(value, context) {
+                            return numberToWeekday(value)
+                        } }]}
                         series={[
                             {
                                 data: dataToGraph,
@@ -68,18 +70,20 @@ const Dashboard = () => {
                 </div>
                 <div className="w-full lg:w-1/2">
                     <LineChart
-                        xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7] }]}
+                        xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7], valueFormatter(value, context) {
+                            return numberToWeekday(value)
+                        }, }]}
+                        yAxis={[{
+                            valueFormatter(value, context) {
+                                return `R$${value}`
+                            }
+                        }]}
                         series={[
                             {
                                 data: dataMoneyToGraph,
                                 color: theme.palette.secondary.main,
                                 baseline: 'min',
                                 label: 'Valor/Agendamentos',
-                            },
-                        ]}
-                        yAxis={[
-                            {
-                                label: 'Valor R$',
                             },
                         ]}
                         height={300}

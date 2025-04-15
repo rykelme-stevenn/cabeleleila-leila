@@ -32,7 +32,7 @@ const Scheduling = () => {
             <div>
                 <NavBar />
                 <div className="lg:px-16 px-4 lg:py-12 py-4 lg:w-4/6 w-6/6 mx-auto ">
-                    <ArrowBackIosIcon className='mb-4' onClick={() => navigate('/home')}/>
+                    <ArrowBackIosIcon className='mb-4 cursor-pointer' onClick={() => navigate('/home')}/>
                     <DayPicker selectedDay={selectedDay} selectDay={(value) => setSelectedDay(value)} />
                     {
                         selectedDay?.day !== 0 && (

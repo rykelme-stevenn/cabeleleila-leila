@@ -93,7 +93,16 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
             if (schedulingToDate > selectedSchedulingToDate) {
                 const timeDifference = Math.abs(schedulingToDate.getTime() - selectedSchedulingToDate.getTime());
                 const daysDifference = timeDifference / (1000 * 3600 * 24);
-                return daysDifference <= 7 && weekdayToNumber(selectedDay.weekday) > weekdayToNumber(scheduling.weekday) 
+                console.log(daysDifference <= 7, 
+                    (weekdayToNumber(selectedDay.weekday) > weekdayToNumber(scheduling.weekday)) , 
+                    scheduling.status != 4 , 
+                    scheduling.status != 3 , 
+                    scheduling.user_id == userId)
+                return (daysDifference <= 7 && 
+                (weekdayToNumber(selectedDay.weekday) < weekdayToNumber(scheduling.weekday)) && 
+                scheduling.status != 4 && 
+                scheduling.status != 3 && 
+                scheduling.user_id == userId) 
             }
         })
         console.log(sameWeekSchedulings)
@@ -185,7 +194,7 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
                         <div className='flex flex-col items-center text-center px-[16px]'>
                             <CheckCircleIcon color='success' style={{ fontSize: 82 }} />
                             <h2 className='font-semibold text-2xl mt-2'>Agendamento {isEdit ? 'alterado' : 'feito'} com sucesso!</h2>
-                            <p className='font-light text-base mt-2 mb-4'>{`Seu agendamento foi ${isEdit ? 'alterado' : 'salvo'} com sucesso para o dia ${selectedDay.day} de ${monthByNumber(selectedDay.month)}. Aguarde seu agendamento ser confirmado pelo profissional que irá te atender.`}</p>
+                            <p className='font-light text-base mt-2 mb-4'>{`Seu agendamento foi ${isEdit ? 'alterado' : 'salvo'} com sucesso para o dia ${haveSchedulingInSameWeek ? schedulingInSameWeek?.day : selectedDay.day} de ${monthByNumber(haveSchedulingInSameWeek && schedulingInSameWeek ? schedulingInSameWeek?.month : selectedDay.month)}. Aguarde seu agendamento ser confirmado pelo profissional que irá te atender.`}</p>
                             <PrimaryButton type="button" label="Ok" onPress={() => {
                                 { handleExit ? handleExit() : handleClose() }
                             }} />

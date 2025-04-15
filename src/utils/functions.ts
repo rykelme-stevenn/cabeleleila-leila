@@ -87,3 +87,31 @@ export function weekdayToNumber(weekday: string) {
   }
   return weekdayNumber
 }
+
+export function numberToWeekday(weekdayNumber: number): string {
+  let weekday = '';
+  switch (weekdayNumber) {
+    case 1:
+      weekday = 'Dom';
+      break;
+    case 2:
+      weekday = 'Seg';
+      break;
+    case 3:
+      weekday = 'Ter';
+      break;
+    case 4:
+      weekday = 'Qua';
+      break;
+    case 5:
+      weekday = 'Qui';
+      break;
+    case 6:
+      weekday = 'Sex';
+      break;
+    case 7:
+      weekday = 'Sab';
+      break;
+  }
+  return weekday;
+}

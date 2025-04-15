@@ -13,6 +13,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { PrimaryButton } from '../Buttons/Buttons';
 import { statusValue } from '../../utils/functions';
 import { useTheme } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 type CommonTableType = {
   headers: Array<{ name: string, ref: string }>
@@ -26,8 +28,8 @@ type CommonTableType = {
 
 const CommonTable = ({ headers, rows, actions, handleEdit, handleCancel, handleView, handleChangeStatus }: CommonTableType) => {
   const theme = useTheme();
+  const user = useSelector((state: RootState) => state.user.user)
 
-  
   function statusConfig(status: number, action: boolean = false) {
     switch (status) {
       case 1:
@@ -52,10 +54,10 @@ const CommonTable = ({ headers, rows, actions, handleEdit, handleCancel, handleV
     return (
       <div className=' gap-3 flex items-center'>
 
-        {(actions.some((value) => value === 'edit') && item.status_number !== 3) && <CreateIcon fontSize='medium' className='cursor-pointer hover:text-[#F7C1D2]' onClick={() => handleEdit && handleEdit(item.id)} />}
+        {(actions.some((value) => value === 'edit') && item.status_number !== 3 && item.status_number !== 4) && <CreateIcon fontSize='medium' className='cursor-pointer hover:text-[#F7C1D2]' onClick={() => handleEdit && handleEdit(item.id)} />}
         {actions.some((value) => value === 'view') && <VisibilityIcon fontSize='medium' className='cursor-pointer hover:text-[#F7C1D2]' onClick={() => handleView && handleView(item.id)} />}
         {
-          (actions.some((value) => value === 'status') && item.status_number < 3) &&
+          (actions.some((value) => value === 'status') && item.status_number < 3 && user?.owner) &&
           <div>
             <PrimaryButton
               color={statusConfig(item?.status_number + 1)?.color} label={`${statusConfig(item?.status_number + 1, true)?.status}`}
@@ -65,7 +67,7 @@ const CommonTable = ({ headers, rows, actions, handleEdit, handleCancel, handleV
         }
 
 {
-          (actions.some((value) => value === 'status') && item.status_number == 1) &&
+          (actions.some((value) => value === 'status') && item.status_number == 1 && user?.owner) &&
           <div>
             <PrimaryButton
               color={statusConfig(4)?.color} label={`${statusConfig(4, true)?.status}`}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getSchedulingById, getSchedulings, getUserSchedulings, updateScheduling } from "../../../service/operational"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../store"
 import CommonTable from "../../../Components/CommonTable/CommonTable"
 import { SchedulingType } from "../../../utils/types/types"
@@ -12,10 +12,11 @@ import StatusExhibition from "../../../Components/StatusExhibition/StatusExhibit
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CommonSnackBar from "../../../Components/CommonSnackBar/CommonSnackBar"
+import { setScheduling } from "../../../store/reducers/scheduling/scheduling"
 
 const YourSchedulings = () => {
     const user = useSelector((state: RootState) => state.user.user)
-    const [schedulingListByUser, setSchedulingListByUser] = useState<Array<SchedulingType>>([])
+    const schedulings = useSelector((state: RootState) => state.scheduling.schedulings)
     const [openedEdit, setOpenedModalEdit] = useState(false)
     const [openedSeeDetails, setOpenedSeeDetails] = useState(false)
     const [onlyView, setOnlyView] = useState(false)
@@ -33,6 +34,7 @@ const YourSchedulings = () => {
         type: "error" | "info" | "success" | "warning";
     } | null>(null)
     const location = useLocation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         handleGetSchedulingsByUser()
@@ -43,7 +45,7 @@ const YourSchedulings = () => {
         console.log(response)
         response = response.reverse()
         shapeRow(response)
-        setSchedulingListByUser(response)
+        dispatch(setScheduling(response))
     }
 
     function shapeRow(schedulings: Array<SchedulingType>) {
@@ -78,7 +80,7 @@ const YourSchedulings = () => {
     return (
         <div className="pt-4">
             {
-                schedulingListByUser.length > 0 ?
+                schedulings.length > 0 ?
                     <CommonTable headers={tableHeaders} rows={tableRowMold} actions={['edit', 'cancel', 'view', 'status']} handleEdit={(schedulingId) => {
                         setSchedulingToEdit(schedulingId)
                         setOpenedModalEdit(true)
