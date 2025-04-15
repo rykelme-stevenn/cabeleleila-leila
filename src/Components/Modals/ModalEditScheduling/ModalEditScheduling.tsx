@@ -23,6 +23,7 @@ type ModalEditSchedulingProps = {
 }
 
 const ModalEditScheduling = ({ opened, schedulingMadeId, handleClose }: ModalEditSchedulingProps) => {
+    const user = useSelector((state: RootState) => state.user.user)
     const [selectedDay, setSelectedDay] = useState<CompleteDateType>({
         day: 0,
         month: 0,
@@ -67,7 +68,7 @@ const ModalEditScheduling = ({ opened, schedulingMadeId, handleClose }: ModalEdi
                 <Divider />
                 <div className='mt-4'>
                 {
-                    validEditingPossible(schedulingMade) ? (<>
+                    validEditingPossible(schedulingMade) || user?.owner ? (<>
                         <DayPicker selectedDay={selectedDay} selectDay={(value) => setSelectedDay(value)} />
                         {
                             selectedDay?.day !== 0 && schedulingMade && (
