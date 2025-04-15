@@ -5,13 +5,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
 import CreateIcon from '@mui/icons-material/Create';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { SchedulingType } from '../../utils/types/types';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { PrimaryButton } from '../Buttons/Buttons';
-import { statusValue } from '../../utils/functions';
 import { useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -22,11 +18,10 @@ type CommonTableType = {
   actions: Array<string>
   handleEdit?: (id: string) => void;
   handleView?: (id: string) => void;
-  handleCancel?: (item: any) => void;
   handleChangeStatus?: (status: number, id: string) => void;
 }
 
-const CommonTable = ({ headers, rows, actions, handleEdit, handleCancel, handleView, handleChangeStatus }: CommonTableType) => {
+const CommonTable = ({ headers, rows, actions, handleEdit, handleView, handleChangeStatus }: CommonTableType) => {
   const theme = useTheme();
   const user = useSelector((state: RootState) => state.user.user)
 
@@ -66,7 +61,7 @@ const CommonTable = ({ headers, rows, actions, handleEdit, handleCancel, handleV
           </div>
         }
 
-{
+        {
           (actions.some((value) => value === 'status') && item.status_number == 1 && user?.owner) &&
           <div>
             <PrimaryButton

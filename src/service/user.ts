@@ -11,7 +11,6 @@ export async function login(loginData: LoginData): Promise<UserType> {
             email: loginData.email
         }
     }).then((response) => {
-        console.log(response);
         if (response?.data?.length > 0 && response?.data[0].password === loginData.password) {
             return response?.data[0];
         }

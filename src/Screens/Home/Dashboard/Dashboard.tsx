@@ -13,23 +13,19 @@ const Dashboard = () => {
     const [dataMoneyToGraph, setDataMoneyToGraph] = useState<Array<number>>([])
 
     useEffect(() => {
-        console.log(scheduling)
         handleGetSchedulingsByDay()
     }, [scheduling])
 
     function handleGetSchedulingsByDay() {
-        console.log('veio', scheduling)
         let today = new Date()
         let sevenDaysAgo = new Date(today)
         sevenDaysAgo.setDate(today.getDate() - 7)
 
         let sevenDaysAgoSchedulings = scheduling.filter((item) => {
             let schedulingDate = new Date(item.year, item.month, item.day)
-            console.log(schedulingDate >= sevenDaysAgo, schedulingDate, today)
             return (schedulingDate >= sevenDaysAgo) && (schedulingDate <= today)
         })
         transformData(sevenDaysAgoSchedulings)
-        console.log(sevenDaysAgoSchedulings)
     }
 
     function transformData(schedulingsSevenDays: Array<SchedulingType>) {

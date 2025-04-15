@@ -19,7 +19,6 @@ const YourSchedulings = () => {
     const schedulings = useSelector((state: RootState) => state.scheduling.schedulings)
     const [openedEdit, setOpenedModalEdit] = useState(false)
     const [openedSeeDetails, setOpenedSeeDetails] = useState(false)
-    const [onlyView, setOnlyView] = useState(false)
     const [tableRowMold, setTableRowMold] = useState<any>([])
     const [schedulingToEdit, setSchedulingToEdit] = useState<string>('')
     const tableHeaders = [
@@ -42,7 +41,6 @@ const YourSchedulings = () => {
 
     async function handleGetSchedulingsByUser() {
         let response = user?.owner ? await getSchedulings() : await getUserSchedulings(user?.id)
-        console.log(response)
         response = response.reverse()
         shapeRow(response)
         dispatch(setScheduling(response))
@@ -63,7 +61,6 @@ const YourSchedulings = () => {
             }
             rowsMold.push(row)
         });
-        console.log(rowsMold)
         setTableRowMold(rowsMold)
 
     }
@@ -87,7 +84,6 @@ const YourSchedulings = () => {
                     }}
                         handleView={(schedulingId) => {
                             setSchedulingToEdit(schedulingId)
-                            setOnlyView(true)
                             setOpenedSeeDetails(true)
                         }}
                         handleChangeStatus={(status, id) => handleChangeSchedulingStatus(status, id)}

@@ -1,15 +1,13 @@
 import Modal from '@mui/material/Modal'
-import { CompleteDateType, CompleteHourType, SchedulingType, ServiceType } from '../../../utils/types/types';
+import { CompleteDateType, CompleteHourType, SchedulingType } from '../../../utils/types/types';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Divider from '@mui/material/Divider';
 import { useEffect, useState } from 'react';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { estimateHour, formatarMoedaReal, monthByNumber, validEditingPossible } from '../../../utils/functions';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { validEditingPossible } from '../../../utils/functions';
 import { PrimaryButton } from '../../Buttons/Buttons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import { getSchedulingById, saveScheduling } from '../../../service/operational';
+import { getSchedulingById } from '../../../service/operational';
 import { useNavigate } from 'react-router-dom';
 import LockClockIcon from '@mui/icons-material/LockClock';
 import { DayPicker } from '../../DayPicker/DayPicker';
@@ -67,48 +65,48 @@ const ModalEditScheduling = ({ opened, schedulingMadeId, handleClose }: ModalEdi
                 </div>
                 <Divider />
                 <div className='mt-4'>
-                {
-                    validEditingPossible(schedulingMade) || user?.owner ? (<>
-                        <DayPicker selectedDay={selectedDay} selectDay={(value) => setSelectedDay(value)} />
-                        {
-                            selectedDay?.day !== 0 && schedulingMade && (
-                                <>
-                                    <h2 className='font-semibold text-lg py-4'>Horários disponíveis</h2>
-                                    <HourPicker selectedDate={selectedDay} selectHour={(value) => {
-                                        setSelectedHour(value)
-                                        setOpenedConfirmEdit(true)
-                                    }} service={schedulingMade.service} schedulingToEdit={schedulingMade} />
-                                    <ModalConfirmScheduling
-                                        opened={openedConfirmEdit}
-                                        handleClose={() => {
-                                            setOpenedConfirmEdit(false)
-                                        }}
-                                        handleExit={() => {
-                                            setOpenedConfirmEdit(false)
-                                            handleClose()
-                                            navigate('/home')
-                                        }}
-                                        selectedDay={selectedDay}
-                                        selectedHour={selectedHour}
-                                        selectedService={schedulingMade.service}
-                                        schedulingToEdit={schedulingMade}
-                                        isEdit={true}
+                    {
+                        validEditingPossible(schedulingMade) || user?.owner ? (<>
+                            <DayPicker selectedDay={selectedDay} selectDay={(value) => setSelectedDay(value)} />
+                            {
+                                selectedDay?.day !== 0 && schedulingMade && (
+                                    <>
+                                        <h2 className='font-semibold text-lg py-4'>Horários disponíveis</h2>
+                                        <HourPicker selectedDate={selectedDay} selectHour={(value) => {
+                                            setSelectedHour(value)
+                                            setOpenedConfirmEdit(true)
+                                        }} service={schedulingMade.service} schedulingToEdit={schedulingMade} />
+                                        <ModalConfirmScheduling
+                                            opened={openedConfirmEdit}
+                                            handleClose={() => {
+                                                setOpenedConfirmEdit(false)
+                                            }}
+                                            handleExit={() => {
+                                                setOpenedConfirmEdit(false)
+                                                handleClose()
+                                                navigate('/home')
+                                            }}
+                                            selectedDay={selectedDay}
+                                            selectedHour={selectedHour}
+                                            selectedService={schedulingMade.service}
+                                            schedulingToEdit={schedulingMade}
+                                            isEdit={true}
 
-                                    />
-                                </>
+                                        />
+                                    </>
+                                )
+                            }
+                        </>) :
+                            (
+                                <div className='flex flex-col items-center text-center'>
+                                    <LockClockIcon style={{ fontSize: 82 }} />
+                                    <h2 className='font-semibold text-2xl mt-2'>Não é possível alterar o agendamento</h2>
+                                    <p className='font-light text-base mt-2 mb-2'>{`Só é possível alterar o agendamento, pelo sistema, 2 dias antes do horário agendado. Segue o número de contato para tratativa direta com o estabelecimento:`}</p>
+                                    <p className='font-semibold text-base mt-2 mb-4'>(13) 99368-1442</p>
+                                    <PrimaryButton type="button" label='ok' onPress={handleClose} />
+                                </div>
                             )
-                        }
-                    </>) :
-                        (
-                            <div className='flex flex-col items-center text-center'>
-                                <LockClockIcon style={{ fontSize: 82 }} />
-                                <h2 className='font-semibold text-2xl mt-2'>Não é possível alterar o agendamento</h2>
-                                <p className='font-light text-base mt-2 mb-2'>{`Só é possível alterar o agendamento, pelo sistema, 2 dias antes do horário agendado. Segue o número de contato para tratativa direta com o estabelecimento:`}</p>
-                                <p className='font-semibold text-base mt-2 mb-4'>(13) 99368-1442</p>
-                                <PrimaryButton type="button" label='ok' onPress={handleClose} />
-                            </div>
-                        )
-                }
+                    }
                 </div>
             </div>
         </Modal>

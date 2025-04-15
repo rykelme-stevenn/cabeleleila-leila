@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material";
 import { CompleteHourType, SchedulingType } from "./types/types";
 
 export function formatarMoedaReal(value: number, decimals: number = 2): string {

@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavBar from '../../Components/NavBar/NavBar';
 import { DayPicker } from '../../Components/DayPicker/DayPicker';
 import HourPicker from '../../Components/HourPicker/HourPicker';
 import { CompleteDateType, CompleteHourType, SchedulingType, ServiceType } from '../../utils/types/types';
 import ModalConfirmScheduling from '../../Components/Modals/ModalConfirmScheduling/ModalConfirmScheduling';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getSchedulings } from '../../service/operational';
-import { useDispatch } from 'react-redux';
-import { setScheduling } from '../../store/reducers/scheduling/scheduling';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const Scheduling = () => {
@@ -24,15 +21,13 @@ const Scheduling = () => {
     const [openedConfirmScheduling, setOpenedConfirmScheduling] = useState(false);
     const serviceSelected: ServiceType = useLocation().state?.service;
     const navigate = useNavigate()
-    // const [schedulingsMade, setSchedulingsMade] = useState<Array<SchedulingType>>([])
-
 
     return (
         <>
             <div>
                 <NavBar />
                 <div className="lg:px-16 px-4 lg:py-12 py-4 lg:w-4/6 w-6/6 mx-auto ">
-                    <ArrowBackIosIcon className='mb-4 cursor-pointer' onClick={() => navigate('/home')}/>
+                    <ArrowBackIosIcon className='mb-4 cursor-pointer' onClick={() => navigate('/home')} />
                     <DayPicker selectedDay={selectedDay} selectDay={(value) => setSelectedDay(value)} />
                     {
                         selectedDay?.day !== 0 && (
@@ -41,7 +36,7 @@ const Scheduling = () => {
                                 <HourPicker selectedDate={selectedDay} selectHour={(value) => {
                                     setSelectedHour(value)
                                     setOpenedConfirmScheduling(true)
-                                }}  service={serviceSelected}/>
+                                }} service={serviceSelected} />
                                 <ModalConfirmScheduling
                                     opened={openedConfirmScheduling}
                                     handleClose={() => setOpenedConfirmScheduling(false)}

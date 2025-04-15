@@ -1,19 +1,15 @@
 import Modal from '@mui/material/Modal'
-import { CompleteDateType, CompleteHourType, SchedulingType, ServiceType } from '../../../utils/types/types';
+import { SchedulingType } from '../../../utils/types/types';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Divider from '@mui/material/Divider';
 import { useEffect, useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { estimateHour, formatarMoedaReal, formatDate, monthByNumber, statusValue } from '../../../utils/functions';
+import { estimateHour, formatarMoedaReal, formatDate, monthByNumber } from '../../../utils/functions';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { PrimaryButton } from '../../Buttons/Buttons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import { getSchedulingById, saveScheduling, updateScheduling } from '../../../service/operational';
-import { useNavigate } from 'react-router-dom';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CircleIcon from '@mui/icons-material/Circle';
-import { themeOptions } from '../../../themeOptions';
+import { getSchedulingById } from '../../../service/operational';
 import { useTheme } from '@mui/material';
 import StatusExhibition from '../../StatusExhibition/StatusExhibition';
 
@@ -25,11 +21,7 @@ type ModalConfirmSchedulingProps = {
 }
 
 const ModalSeeDetails = ({ opened, handleClose, schedulingMadeId }: ModalConfirmSchedulingProps) => {
-    const userId = useSelector((state: RootState) => state.user.user?.id)
     const [schedulingMade, setSchedulingMade] = useState<SchedulingType>()
-    const [successToSave, setSuccessToSave] = useState(false)
-    const theme = useTheme()
-
 
     useEffect(() => {
         if (opened === true) {
@@ -59,7 +51,6 @@ const ModalSeeDetails = ({ opened, handleClose, schedulingMadeId }: ModalConfirm
                 {
                     schedulingMade &&
                     <>
-                        {/* {isEdit && <h2 className='font-semibold text-xl text-center mt-2'>Deseja alterar o agendamento para:</h2>} */}
                         <div className='w-full h-full p-[16px] bg-[#eceded] rounded-md mt-4 flex justify-between mb-4'>
                             <div>
                                 <p className='font-semibold text-lg mb-2'>{schedulingMade?.service.name}</p>
@@ -67,7 +58,7 @@ const ModalSeeDetails = ({ opened, handleClose, schedulingMadeId }: ModalConfirm
                                     <AccountCircleIcon fontSize='large' />
                                     <p className='ml-2 font-medium text-base'>Leila</p>
                                 </div>
-                                <div className='flex'>
+                                <div className='flex lg:flex-row flex-col'>
                                     <p className="text-base font-medium text-[#159343] mr-6">{schedulingMade?.service.value && formatarMoedaReal(schedulingMade?.service?.value)}</p>
                                     <p className="text-base font-medium"><AccessTimeIcon fontSize='small' /> {formatDate(schedulingMade.hour, schedulingMade.minute, ':')} - {estimateHour(schedulingMade, schedulingMade?.service.estimated_time)}</p>
                                 </div>

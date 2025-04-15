@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTheme } from "@mui/material";
@@ -55,7 +55,6 @@ export const DayPicker = ({ selectDay, selectedDay }: DayPickerProps) => {
     }
 
     function invalidCurrentDate() {
-        console.log(currentDate)
         let today = new Date()
         return (
             today.getFullYear() === currentDate.getFullYear() &&
@@ -73,7 +72,7 @@ export const DayPicker = ({ selectDay, selectedDay }: DayPickerProps) => {
                     disabled={invalidCurrentDate()}
                     className="p-2 rounded-full hover:bg-gray-100"
                 >
-                    <ArrowBackIcon className="w-5 h-5" color={invalidCurrentDate() ? "disabled" : 'inherit'}/>
+                    <ArrowBackIcon className="w-5 h-5" color={invalidCurrentDate() ? "disabled" : 'inherit'} />
                 </button>
 
                 <h2 className="text-lg font-semibold capitalize">

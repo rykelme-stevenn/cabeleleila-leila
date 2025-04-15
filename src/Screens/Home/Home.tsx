@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import { getSchedulings, getServices } from "../../service/operational";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,13 +7,12 @@ import { RootState } from "../../store";
 import Divider from "@mui/material/Divider";
 import { formatarMoedaReal } from "../../utils/functions";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { PrimaryButton, SecondaryButton } from "../../Components/Buttons/Buttons";
+import { PrimaryButton } from "../../Components/Buttons/Buttons";
 import { useNavigate } from "react-router-dom";
 import YourSchedulings from "./YourSchedulings/YourSchedulings";
 import Chip from "@mui/material/Chip";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CommonSnackBar from "../../Components/CommonSnackBar/CommonSnackBar";
 import Dashboard from "./Dashboard/Dashboard";
 import { setScheduling } from "../../store/reducers/scheduling/scheduling";
 
@@ -80,7 +79,7 @@ const Home = () => {
                         ))}
                     </div>
                     <div className="col-span-2 rounded-lg p-4">
-                        <Card className="h-full">
+                        <Card className="">
                             <CardContent>
                                 <div className="mb-3">
                                     <p className="text-base font-semibold">Localização</p>

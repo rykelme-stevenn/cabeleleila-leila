@@ -16,7 +16,7 @@ const HourPicker = ({ selectedDate, selectHour, service, schedulingToEdit }: Hou
     const closeHour = 18;
     const [hoursVisible, setHoursVisible] = useState<Array<CompleteHourType>>([])
     const theme = useTheme()
-    const schedulingsMade = useSelector((state: RootState ) => state.scheduling.schedulings)
+    const schedulingsMade = useSelector((state: RootState) => state.scheduling.schedulings)
 
     useEffect(() => {
         visibleHours()
@@ -28,13 +28,11 @@ const HourPicker = ({ selectedDate, selectHour, service, schedulingToEdit }: Hou
         let index = 0
 
         for (let hour = openHour; hour < closeHour; hour++) {
-            console.log('here')
             if (hour === openHour) {
-
-                !isHourlyUsed(hour, 0) && ( hoursX.push({
+                !isHourlyUsed(hour, 0) && isGreaterThenNow(hour, 0) && (hoursX.push({
                     hour: hour,
                     minute: 0
-                }) )
+                }))
                 hoursXGeneral.push({ hour: hour, minute: 0 })
             }
             let minutesTotal: number = (hoursXGeneral[index].hour * 60) + service.estimated_time + hoursXGeneral[index].minute
@@ -42,7 +40,7 @@ const HourPicker = ({ selectedDate, selectHour, service, schedulingToEdit }: Hou
             let minutesToAdd = minutesTotal - (hoursToAdd * 60)
 
 
-            if (!isHourlyUsed(hoursToAdd, minutesToAdd)) {
+            if (!isHourlyUsed(hoursToAdd, minutesToAdd) && isGreaterThenNow(hoursToAdd, minutesToAdd)) {
                 hoursX.push({ hour: hoursToAdd, minute: minutesToAdd })
             }
             hoursXGeneral.push({ hour: hoursToAdd, minute: minutesToAdd })
@@ -52,15 +50,25 @@ const HourPicker = ({ selectedDate, selectHour, service, schedulingToEdit }: Hou
         setHoursVisible(hoursX)
     }
 
+    function isGreaterThenNow(hour: number, minute: number) {
+        let today = new Date();
+        if (today.getDate() === selectedDate.day) {
+            let totalMinutes = (hour * 60) + minute
+            let totalMinutesToday = Math.floor(((today.getHours() + 1) * 60) + (today.getMinutes() + 1))
+            return totalMinutes > totalMinutesToday
+        }
+        return true
+    }
+
     function isHourlyUsed(hoursToAdd: number, minutesToAdd: number) {
-        const isUsed = schedulingToEdit ?schedulingsMade.some(s => s.service.id === service.id && s.day === selectedDate.day && s.hour === hoursToAdd && s.minute === minutesToAdd && s.id !== schedulingToEdit.id) : schedulingsMade.some(s => s.service.id === service.id && s.day === selectedDate.day && s.hour === hoursToAdd && s.minute === minutesToAdd);
+        const isUsed = schedulingToEdit ? schedulingsMade.some(s => s.service.id === service.id && s.day === selectedDate.day && s.hour === hoursToAdd && s.minute === minutesToAdd && s.id !== schedulingToEdit.id) : schedulingsMade.some(s => s.service.id === service.id && s.day === selectedDate.day && s.hour === hoursToAdd && s.minute === minutesToAdd);
         return (isUsed)
     }
 
     return (
         <div className="bg-white">
             {
-                (hoursVisible && (hoursVisible?.length > 0)) && (
+                (hoursVisible && (hoursVisible?.length > 0)) ? (
                     <div className="gap-3 grid grid-cols-4">
                         {
                             hoursVisible.map((hour) => (
@@ -73,6 +81,8 @@ const HourPicker = ({ selectedDate, selectHour, service, schedulingToEdit }: Hou
                             ))
                         }
                     </div>
+                ) : (
+                    <p className="text-base font-semibold text-center pt-12">Nenhum horário disponível para este dia</p>
                 )
             }
         </div>

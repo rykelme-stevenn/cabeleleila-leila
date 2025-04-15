@@ -9,14 +9,13 @@ const NavBar = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(theme.palette.primary.main)
     return (
-        <div style={{backgroundColor: theme.palette.primary.main}} color='primary' className='lg:px-16 px-4 py-2 flex items-center w-full h-16 justify-between'>
-            <img src={logoIcon} alt="" className="h-10"/>
-            <LogoutIcon style={{color: 'white'}} className="cursor-pointer" onClick={() => {
+        <div style={{ backgroundColor: theme.palette.primary.main }} color='primary' className='lg:px-16 px-4 py-2 flex items-center w-full h-16 justify-between'>
+            <img src={logoIcon} alt="" className="h-10" />
+            <LogoutIcon style={{ color: 'white' }} className="cursor-pointer" onClick={() => {
                 dispatch(setUser(null))
                 navigate('/home')
-            }}/>
+            }} />
         </div>
     )
 }

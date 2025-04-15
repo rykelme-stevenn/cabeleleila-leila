@@ -23,14 +23,13 @@ const Login = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [ loginError, setLoginError ] = useState(false)
+    const [loginError, setLoginError] = useState(false)
 
 
     const onSubmit = async (data: LoginForm) => {
-        console.log('Form Submitted:', data);
         let response = await login(data)
         if (response?.id) {
-            dispatch(setUser(response ))
+            dispatch(setUser(response))
             navigate('home')
         } else { setLoginError(true) }
 

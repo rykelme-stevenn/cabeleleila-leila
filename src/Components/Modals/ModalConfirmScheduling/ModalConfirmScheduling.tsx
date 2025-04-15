@@ -10,7 +10,6 @@ import { PrimaryButton, SecondaryButton } from '../../Buttons/Buttons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { saveScheduling, updateScheduling } from '../../../service/operational';
-import { useNavigate } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 type ModalConfirmSchedulingProps = {
@@ -36,7 +35,6 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
     }, [opened])
 
     async function handleConfirmScheduling() {
-        console.log(userId)
         if (!userId) return
         let schedulingData: SchedulingType = {
             user_id: userId,
@@ -49,7 +47,7 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
             status: 1,
             service: selectedService
         }
-        if(haveSchedulingInSameWeek && schedulingInSameWeek){
+        if (haveSchedulingInSameWeek && schedulingInSameWeek) {
             schedulingData.day = schedulingInSameWeek?.day
             schedulingData.month = schedulingInSameWeek?.month
             schedulingData.year = schedulingInSameWeek?.year
@@ -64,7 +62,6 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
     }
 
     async function handleConfirmSchedulingEdit() {
-        console.log(userId)
         if (!userId) return
         let schedulingData: SchedulingType = {
             user_id: userId,
@@ -78,7 +75,6 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
             service: selectedService,
             id: schedulingToEdit?.id
         }
-        console.log(schedulingData)
         let response = await updateScheduling(schedulingData)
         if (response != null) {
             setSuccessToSave(true)
@@ -89,23 +85,16 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
         let sameWeekSchedulings = schedulings.filter((scheduling) => {
             let schedulingToDate = new Date(scheduling.year, scheduling.month, scheduling.day)
             let selectedSchedulingToDate = new Date(selectedDay.year, selectedDay.month, selectedDay.day)
-            console.log(schedulingToDate > selectedSchedulingToDate)
             if (schedulingToDate > selectedSchedulingToDate) {
                 const timeDifference = Math.abs(schedulingToDate.getTime() - selectedSchedulingToDate.getTime());
                 const daysDifference = timeDifference / (1000 * 3600 * 24);
-                console.log(daysDifference <= 7, 
-                    (weekdayToNumber(selectedDay.weekday) > weekdayToNumber(scheduling.weekday)) , 
-                    scheduling.status != 4 , 
-                    scheduling.status != 3 , 
+                return (daysDifference <= 7 &&
+                    (weekdayToNumber(selectedDay.weekday) < weekdayToNumber(scheduling.weekday)) &&
+                    scheduling.status != 4 &&
+                    scheduling.status != 3 &&
                     scheduling.user_id == userId)
-                return (daysDifference <= 7 && 
-                (weekdayToNumber(selectedDay.weekday) < weekdayToNumber(scheduling.weekday)) && 
-                scheduling.status != 4 && 
-                scheduling.status != 3 && 
-                scheduling.user_id == userId) 
             }
         })
-        console.log(sameWeekSchedulings)
         if (sameWeekSchedulings.length > 0) {
             sameWeekSchedulings.sort((a, b) => {
                 const timeDifferenceA = (Math.abs(new Date(a.year, a.month, a.day).getTime() - new Date(selectedDay.year, selectedDay.month, selectedDay.day).getTime())) / (1000 * 3600 * 24);
@@ -113,7 +102,6 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
 
                 return timeDifferenceA - timeDifferenceB;
             });
-            console.log(sameWeekSchedulings[0])
             setSchedulingInSameWeek(sameWeekSchedulings[0])
             setHaveSchedulingInSameWeek(true)
         } else {
@@ -123,19 +111,19 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
     }
 
     const SameWeekScheduling = () => {
-        if(!schedulingInSameWeek) return <></>
+        if (!schedulingInSameWeek) return <></>
         return (
             <div className='text-center'>
                 <h2 className='font-semibold text-xl text-center mt-2'>Você possui agendamentos para essa semana!</h2>
                 <p className='font-light text-lg mt-2 mb-4'>{`Você possui um agendamento para o dia ${formatDate(schedulingInSameWeek?.day, schedulingInSameWeek?.month + 1, '/')}. Deseja juntar esse agendamento com o agendamento já cadastrado?`}</p>
-                
+
                 <div className='mb-4'><PrimaryButton label={'Sim'} type={'button'}
                     onPress={() => handleConfirmScheduling()}
                 /></div>
                 <SecondaryButton label={'Não'} type={'button'} onPress={() => {
                     setSchedulingInSameWeek(null)
                     setHaveSchedulingInSameWeek(false)
-                }}/>
+                }} />
             </div>
         )
     }
@@ -174,7 +162,7 @@ const ModalConfirmScheduling = ({ opened, handleClose, selectedHour, selectedDay
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <div  className='lg:inline-table lg:rounded-lg bg-white w-full absolute bottom-0 lg:top-1/2 lg:w-1/2 lg:left-1/2 lg:translate-x-[-50%] lg:translate-y-[-50%] p-5
+            <div className='lg:inline-table lg:rounded-lg bg-white w-full absolute bottom-0 lg:top-1/2 lg:w-1/2 lg:left-1/2 lg:translate-x-[-50%] lg:translate-y-[-50%] p-5
              lg:top-1/2'>
                 <div className='w-full flex items-center justify-end pb-4'>
                     <CancelIcon className='cursor-pointer hover:text-red-500' fontSize='large' onClick={() => handleClose()} />
