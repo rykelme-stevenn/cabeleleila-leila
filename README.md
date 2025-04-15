@@ -1,4 +1,4 @@
-# CabeleLeila System - Sistema de Agendamento de Serviços de Cabeleireiro
+# Cabeleleila System - Sistema de Agendamento de Serviços de Cabeleireiro
 
 **Cabeleleila System** é um sistema de agendamento de serviços para o **Cabeleleila Leila**, uma empresa de cabeleireiro da cabeleleila leila. O sistema permite que os clientes agendem serviços de forma prática e eficiente, e que a leila gerencie esses agendamentos.
 
