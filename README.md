@@ -66,9 +66,11 @@ Obs: Durante a execução, se o terminal pedir para rodar na porta 3001 (ou em o
 
 ## Utilizando o sistema
 #### Usuário comum
+Para logar-se utilize algum desses dois usuários:
+
 - Usuário: teste@outlook.com 
 - Senha: teste123
 
-#### Usuário leila
+#### Usuário leila(adm)
 - Usuário: leilacabeleleila@outlook.com
 - Senha: Corte123
