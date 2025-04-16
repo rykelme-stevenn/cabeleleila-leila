@@ -28,7 +28,7 @@ Primeiro, clone o repositório da API que simula o banco de dados (JSON Server).
 git clone https://github.com/rykelme-stevenn/cabeleleila-leila-api.git
 ```
 ### 2. Instale o JSON Server globalmente:
-
+Onde o repositório foi clonado, rode:
 ```bash
 npm install -g json-server
 ```
